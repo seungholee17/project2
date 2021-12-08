@@ -56,14 +56,22 @@ Paragraph or two introducing your datasets and variables, why they are interesti
 ```{R}
 library(tidyverse)
 # read your datasets in here, e.g., with read_csv()
-nbastats2018_2019 <- read_csv("nbastats2018-2019.csv")
-nbastats <- nbastats2018_2019
+nbastats2018_2019 <- read_csv("nbastats2018-2019.csv", 
+     col_types = cols(Height = col_number(), 
+         Weight = col_number(), Age = col_number(), 
+         Salary = col_number(), Points = col_number(), 
+         Blocks = col_number(), Steals = col_number(), 
+         Assists = col_number(), Rebounds = col_number(), 
+         `FT%` = col_number(), `FG3%` = col_number(), 
+         `FG%` = col_number(), MP = col_number(), 
+         G = col_number()))
+nbastats2018_2019
 # if your dataset needs tidying, do so here
 
 # any other code here
-nbastats %>% filter(Citzenship == "USA")
-nbastats %>% filter(Citzenship == "International")
 
+nbastats2018_2019 %>% filter(Citzenship == "USA")
+nbastats2018_2019 %>% filter(Citzenship == "International")
 ```
 
 ### Cluster Analysis
@@ -71,10 +79,33 @@ nbastats %>% filter(Citzenship == "International")
 ```{R}
 library(cluster)
 # clustering code here
+nbastats <-(na.omit(nbastats2018_2019))
+subset(nbastats, select = -c(Name, Height, Weight, Team, Citzenship))
+nbaclusterdata <- subset(nbastats, select = -c(Name, Height, Weight, Team, Citzenship))
+sil_width <- vector()
+for (i in 2:10) {
+  kms <- kmeans(nbaclusterdata, centers = i)
+  sil <- silhouette(kms$cluster, dist(nbaclusterdata))
+  sil_width[i] <- mean(sil[, 3])
+}
+ggplot() + geom_line(aes(x = 1:10, y = sil_width)) + 
+  scale_x_continuous(name = "k", breaks = 1:10)
+nba_pam <- nbaclusterdata %>% pam(k = 2)
+nba_pam
+nba_pam$silinfo$avg.width
+nbastats[23,]
+nbastats[40,]
+library(GGally)
+nbaclusterdata %>% mutate(cluster = as.factor(nba_pam$clustering)) %>% 
+    ggpairs(columns = c("Points", "Blocks", 
+        "Steals", "Assists", "Rebounds", "Age", "cluster"), 
+        aes(color = cluster))
+nbaclusterdata %>% slice(nba_pam$id.med)
+plot(nba_pam, which = 2)
 ```
 
 Discussion of clustering here
-    
+*For this portion of the project, a new data called "nbastats" was created where it omitted all observations that included NAs. In the nbastats dataset, all the character columns such as Names, Teams, etc. were removed in order to move on with the PAM cluster analysis and this dataset was named "nbaclusterdata". The best number to use for a PAM clustering algorithm was k=2, and that was when the silhouette width was highest, at a value of around 0.67, which is the same as the overall average silhouette width. This number indicates that a reasonable structure has been found. Since all the names of the players were removed in the nba_pam data, I was not able to directly figure the names of the players directly. However, the user ID information was displayed from nba_pam and it was used in the "nbastats" data in order to find the names of the medoids. The two provinces that are the medoids were Jrue Holiday and Ben Simmons.*   
     
 ### Dimensionality Reduction with PCA
 
