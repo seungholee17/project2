@@ -1538,12 +1538,51 @@ div.tocify {
 <div id="introduction" class="section level3">
 <h3>Introduction</h3>
 <p>Paragraph or two introducing your datasets and variables, why they are interesting to you, etc. See instructions for more information</p>
+<p><em>Continuing with the theme from my project 1, I have decided to utilize the same nbastats dataset that was obtained from kaggle for my project. However, for the purpose of this project, this list of players have been narrowed down to the best 50 players (50 observations) from the 2018-2019 NBA season. Additionally, a new variable was added called “citizenship” which will be the binary variable for the dataset, and the I have also altered the stat variables from the original dataset in order to only work with the stats/variables that I was particularly interested in. The nbastats dataset includes character variables such as name, height, weight, team, and citizenship. The dataset also involves variables that measure numerical values such as age, salary, points, blocks, steals, assists, rebounds, free throw percentage, 3 point field goal percentage, field goal percentage, minutes played, and games played. For my binary variable (“citizenship”), there are 35 observations for USA and there are 15 observations for International. Also, the data did not need any tidying. I chose this particular dataset and these specific variables because growing up, basketball has always been a huge part of life. I loved playing basketball as well as watching NBA basketball. Whether I am on the court myself playing or watching my favorite player playing on TV, I was always engaged and interested in keeping up with the different statistics involved in the game of basketball.</em></p>
 <pre class="r"><code>library(tidyverse)
 # read your datasets in here, e.g., with read_csv()
-
+nbastats2018_2019 &lt;- read_csv(&quot;nbastats2018-2019.csv&quot;)
+nbastats &lt;- nbastats2018_2019
 # if your dataset needs tidying, do so here
 
-# any other code here</code></pre>
+# any other code here
+nbastats %&gt;% filter(Citzenship == &quot;USA&quot;)</code></pre>
+<pre><code>## # A tibble: 35 x 17
+##    Name  Height Weight Team  Citzenship   Age Salary Points Blocks Steals
+##    &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 LaMa…     83    260 San … USA           33 2.23e7   21.3    1.3    0.5
+##  2 Brad…     77    207 Wash… USA           25 2.54e7   25.6    0.7    1.5
+##  3 Eric…     73    205 Milw… USA           29 1.50e7   15.9    0.4    1.5
+##  4 Devi…     78    210 Phoe… USA           22 3.31e6   26.6    0.2    0.9
+##  5 Jimm…     80    232 Phil… USA           29 2.04e7   18.7    0.6    1.9
+##  6 John…     82    235 Atla… USA           21 2.30e6   19.5    0.6    0.4
+##  7 Mike…     73    175 Memp… USA           31 3.05e7   21.1    0.3    1.3
+##  8 Step…     75    190 Gold… USA           30 3.75e7   27.3    0.4    1.3
+##  9 Anth…     82    253 New … USA           25 2.54e7   25.9    2.4    1.6
+## 10 DeMa…     79    220 San … USA           29 2.77e7   21.2    0.5    1.1
+## # … with 25 more rows, and 7 more variables: Assists &lt;dbl&gt;, Rebounds &lt;dbl&gt;,
+## #   `FT%` &lt;dbl&gt;, `FG3%` &lt;dbl&gt;, `FG%` &lt;dbl&gt;, MP &lt;dbl&gt;, G &lt;dbl&gt;</code></pre>
+<pre class="r"><code>nbastats %&gt;% filter(Citzenship == &quot;International&quot;)</code></pre>
+<pre><code>## # A tibble: 15 x 17
+##    Name  Height Weight Team  Citzenship   Age Salary Points Blocks Steals
+##    &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Stev…     84    265 Okla… Internati…    25 2.42e7   13.9    1      1.5
+##  2 Gian…     83    242 Milw… Internati…    24 2.42e7   27.7    1.5    1.3
+##  3 Clin…     82    240 Hous… Internati…    24 1.53e7   16.6    1.5    0.7
+##  4 Luka…     79    218 Dall… Internati…    19 6.56e6   21.2    0.3    1.1
+##  5 Joel…     84    250 Phil… Internati…    24 2.55e7   27.5    1.9    0.7
+##  6 Dani…     82    225 Los … Internati…    30 2.16e7   19.8    0.3    0.7
+##  7 Rudy…     85    245 Utah… Internati…    26 2.32e7   15.9    2.3    0.8
+##  8 Al H…     82    245 Bost… Internati…    32 2.89e7   13.6    1.3    0.9
+##  9 Niko…     84    250 Denv… Internati…    23 2.46e7   20.1    0.7    1.4
+## 10 Jusu…     84    275 Port… Internati…    24 1.11e7   15.6    1.4    1  
+## 11 Doma…     83    240 Indi… Internati…    22 2.66e6   14.1    0.4    0.6
+## 12 Pasc…     81    230 Toro… Internati…    24 1.54e6   16.9    0.7    0.9
+## 13 Ben …     82    230 Phil… Internati…    22 6.43e6   16.9    0.8    1.4
+## 14 Karl…     84    248 Minn… Internati…    23 7.84e6   24.4    1.6    0.9
+## 15 Niko…     84    260 Orla… Internati…    28 1.27e7   20.8    1.1    1  
+## # … with 7 more variables: Assists &lt;dbl&gt;, Rebounds &lt;dbl&gt;, `FT%` &lt;dbl&gt;,
+## #   `FG3%` &lt;dbl&gt;, `FG%` &lt;dbl&gt;, MP &lt;dbl&gt;, G &lt;dbl&gt;</code></pre>
 </div>
 <div id="cluster-analysis" class="section level3">
 <h3>Cluster Analysis</h3>

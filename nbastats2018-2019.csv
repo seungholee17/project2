@@ -1,0 +1,51 @@
+Name,Height,Weight,Team,Citzenship,Age,Salary,Points,Blocks,Steals,Assists,Rebounds,FT%,FG3%,FG%,MP,G
+Steven Adams,84,265,Oklahoma City Thunder,International,25,24157304,13.9,1,1.5,1.6,9.5,0.5,0,0.595,33.4,80
+LaMarcus Aldridge,83,260,San Antonio Spurs,USA,33,22347015,21.3,1.3,0.5,2.4,9.2,0.847,0.238,0.519,33.2,81
+Giannis Antetokounmpo,83,242,Milwaukee Bucks,International,24,24157304,27.7,1.5,1.3,5.9,12.5,0.729,0.256,0.578,32.8,72
+Bradley Beal,77,207,Washington Wizards,USA,25,25434263,25.6,0.7,1.5,5.5,5,0.808,0.351,0.475,36.9,82
+Eric Bledsoe,73,205,Milwaukee Bucks,USA,29,15000000,15.9,0.4,1.5,5.5,4.6,0.75,0.329,0.484,29.1,78
+Devin Booker,78,210,Phoenix Suns,USA,22,3314365,26.6,0.2,0.9,6.8,4.1,0.866,0.326,0.467,35,64
+Jimmy Butler,80,232,Philadelphia 76ers,USA,29,20445779,18.7,0.6,1.9,4,5.3,0.855,0.347,0.462,33.6,65
+Clint Capela,82,240,Houston Rockets,International,24,15293104,16.6,1.5,0.7,1.4,12.7,0.636,,0.648,33.6,67
+John Collins,82,235,Atlanta Hawks,USA,21,2299080,19.5,0.6,0.4,2,9.8,0.763,0.348,0.56,30,61
+Mike Conley,73,175,Memphis Grizzlies,USA,31,30521116,21.1,0.3,1.3,6.4,3.4,0.845,0.364,0.438,33.5,70
+Stephen Curry,75,190,Golden State Warriors,USA,30,37457154,27.3,0.4,1.3,5.2,5.3,0.916,0.437,0.472,33.8,69
+Anthony Davis,82,253,New Orleans Pelicans,USA,25,25434263,25.9,2.4,1.6,3.9,12,0.794,0.331,0.517,33,56
+DeMar DeRozan,79,220,San Antonio Spurs,USA,29,27739975,21.2,0.5,1.1,6.2,6,0.83,0.156,0.481,34.9,77
+Luka Doncic,79,218,Dallas Mavericks,International,19,6560640,21.2,0.3,1.1,6,7.8,0.713,0.327,0.427,32.2,72
+Kevin Durant,81,240,Golden State Warriors,USA,30,30000000,26,1.1,0.7,5.9,6.4,0.885,0.353,0.521,34.6,78
+Joel Embiid,84,250,Philadelphia 76ers,International,24,25467250,27.5,1.9,0.7,3.7,13.6,0.804,0.3,0.484,33.7,64
+De'Aaron Fox,75,175,Sacramento Kings,USA,21,5470920,17.3,0.6,1.6,7.3,3.8,0.727,0.371,0.458,31.4,81
+Danilo Gallinari,82,225,Los Angeles Clippers,International,30,21587579,19.8,0.3,0.7,2.6,6.1,0.904,0.433,0.463,30.3,68
+Paul George,81,220,Oklahoma City Thunder,USA,28,30560700,28,0.4,2.2,4.1,8.2,0.839,0.386,0.438,36.9,77
+Rudy Gobert,85,245,Utah Jazz,International,26,23241573,15.9,2.3,0.8,2,12.9,0.636,,0.669,31.8,81
+Draymond Green,79,230,Golden State Warriors,USA,28,17469565,7.4,1.1,1.4,6.9,7.3,0.692,0.285,0.445,31.3,66
+Blake Griffin,82,250,Detroit Pistons,USA,29,32088932,24.5,0.4,0.7,5.4,7.5,0.753,0.362,0.462,35,75
+James Harden,77,220,Houston Rockets,USA,29,30431854,36.1,0.7,2,7.5,6.6,0.879,0.368,0.442,36.8,78
+Tobias Harris,81,235,Philadelphia 76ers,USA,26,14800000,20,0.5,0.6,2.8,7.9,0.866,0.397,0.487,34.7,82
+Jrue Holiday,76,205,New Orleans Pelicans,USA,28,25976111,21.2,0.8,1.6,7.7,5,0.768,0.325,0.472,35.9,67
+Al Horford,82,245,Boston Celtics,International,32,28928710,13.6,1.3,0.9,4.2,6.7,0.821,0.36,0.535,29,68
+Kyrie Irving,75,193,Boston Celtics,USA,26,20099189,23.8,0.5,1.5,6.9,5,0.873,0.401,0.487,33,67
+LeBron James,80,250,Los Angeles Lakers,USA,34,35654150,27.4,0.6,1.3,8.3,8.5,0.665,0.339,0.51,35.2,55
+Nikola Jokic,84,250,Denver Nuggets,International,23,24605181,20.1,0.7,1.4,7.3,10.8,0.821,0.307,0.511,31.3,80
+Kawhi Leonard,79,230,Toronto Raptors,USA,27,23114067,26.6,0.4,1.8,3.3,7.3,0.854,0.371,0.496,34,60
+Damian Lillard,75,195,Portland Trail Blazers,USA,28,27977689,25.8,0.4,1.1,6.9,4.6,0.912,0.369,0.444,35.5,80
+Kyle Lowry,73,196,Toronto Raptors,USA,32,31200000,14.2,0.5,1.4,8.7,4.8,0.83,0.347,0.411,34,65
+Khris Middleton,80,222,Milwaukee Bucks,USA,27,13000000,18.3,0.1,1,4.3,6,0.837,0.378,0.441,31.1,77
+Donovan Mitchell,75,215,Utah Jazz,USA,22,3111480,23.8,0.4,1.4,4.2,4.1,0.806,0.362,0.432,33.7,77
+Marcus Morris,81,235,Boston Celtics,USA,29,5375000,13.9,0.3,0.6,1.5,6.1,0.844,0.375,0.447,27.9,75
+Jusuf Nurkic,84,275,Portland Trail Blazers,International,24,11111111,15.6,1.4,1,3.2,10.4,0.773,0.103,0.508,27.4,72
+Victor Oladipo,76,210,Indiana Pacers,USA,26,21000000,18.8,0.3,1.7,5.2,5.6,0.73,0.343,0.423,31.9,36
+Chris Paul,72,175,Houston Rockets,USA,33,35654150,15.6,0.3,2,8.2,4.6,0.862,0.358,0.419,32,58
+Josh Richardson,78,200,Miami Heat,USA,25,9367200,16.6,0.5,1.1,4.1,3.6,0.861,0.357,0.412,34.8,73
+Domantas Sabonis,83,240,Indiana Pacers,International,22,2659800,14.1,0.4,0.6,2.9,9.3,0.715,0.529,0.59,24.8,74
+Pascal Siakam,81,230,Toronto Raptors,International,24,1544951,16.9,0.7,0.9,3.1,6.9,0.785,0.369,0.549,31.9,80
+Ben Simmons,82,230,Philadelphia 76ers,International,22,6434520,16.9,0.8,1.4,7.7,8.8,0.6,0,0.563,34.2,79
+Jayson Tatum,80,208,Boston Celtics,USA,20,6700800,15.7,0.7,1.1,2.1,6,0.855,0.373,0.45,31.1,79
+Klay Thompson,79,215,Golden State Warriors,USA,28,18988725,21.5,0.6,1.1,2.4,3.8,0.816,0.402,0.467,34,78
+Karl-Anthony Towns,84,248,Minnesota Timberwolves,International,23,7839435,24.4,1.6,0.9,3.4,12.4,0.836,0.4,0.518,33.1,77
+Myles Turner,83,250,Indiana Pacers,USA,22,3410284,13.3,2.7,0.8,1.6,7.2,0.736,0.388,0.487,28.6,74
+Nikola Vucevic,84,260,Orlando Magic,International,28,12750000,20.8,1.1,1,3.8,12,0.789,0.364,0.518,31.4,80
+Kemba Walker,73,184,Charlotte Hornets,USA,28,12000000,25.6,0.4,1.2,5.9,4.4,0.844,0.356,0.434,34.9,82
+Russell Westbrook,75,200,Oklahoma City Thunder,USA,30,35654150,22.9,0.5,1.9,10.7,11.1,0.656,0.29,0.428,36,73
+Justise Winslow,79,225,Miami Heat,USA,22,3448926,12.6,0.3,1.1,4.3,5.4,0.628,0.375,0.433,29.7,66

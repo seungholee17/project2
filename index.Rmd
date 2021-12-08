@@ -52,13 +52,18 @@ class_diag <- function(score, truth, positive, cutoff=.5){
 
 Paragraph or two introducing your datasets and variables, why they are interesting to you, etc. See instructions for more information
 
+*Continuing with the theme from my project 1, I have decided to utilize the same nbastats dataset that was obtained from kaggle for my project. However, for the purpose of this project, this list of players have been narrowed down to the best 50 players (50 observations) from the 2018-2019 NBA season. Additionally, a new variable was added called "citizenship" which will be the binary variable for the dataset, and the I have also altered the stat variables from the original dataset in order to only work with the stats/variables that I was particularly interested in. The nbastats dataset includes character variables such as name, height, weight, team, and citizenship. The dataset also involves variables that measure numerical values such as age, salary, points, blocks, steals, assists, rebounds, free throw percentage, 3 point field goal percentage, field goal percentage, minutes played, and games played. For my binary variable ("citizenship"), there are 35 observations for USA and there are 15 observations for International. Also, the data did not need any tidying. I chose this particular dataset and these specific variables because growing up, basketball has always been a huge part of life. I loved playing basketball as well as watching NBA basketball. Whether I am on the court myself playing or watching my favorite player playing on TV, I was always engaged and interested in keeping up with the different statistics involved in the game of basketball.*
 ```{R}
 library(tidyverse)
 # read your datasets in here, e.g., with read_csv()
-
+nbastats2018_2019 <- read_csv("nbastats2018-2019.csv")
+nbastats <- nbastats2018_2019
 # if your dataset needs tidying, do so here
 
 # any other code here
+nbastats %>% filter(Citzenship == "USA")
+nbastats %>% filter(Citzenship == "International")
+
 ```
 
 ### Cluster Analysis
