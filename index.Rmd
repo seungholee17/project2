@@ -195,29 +195,27 @@ table(actual = y, predicted = y_hat)
 set.seed(322)
 k = 10
 
-data <- sample_frac(nbastats)  #randomly order rows
-folds <- rep(1:k, length.out = nrow(data))  #create folds
+data <- sample_frac(nbastats)  
+folds <- rep(1:k, length.out = nrow(data))  
 
 diags <- NULL
 
 i = 1
 for (i in 1:k) {
-    # create training and test sets
     train <- data[folds != i, ]
     test <- data[folds == i, ]
     truth <- test$Citzenship
     
-    # train model
-    fit <- knn3(Citzenship == "True" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = test)  ### SPECIFY THE LOGISTIC REGRESSION MODEL FIT TO THE TRAINING SET HERE
     
-    # test model
-    probs <- predict(fit,newdata = test)[, 1]  ### GET PREDICTIONS FROM THE TRAINED MODEL ON THE TEST SET HERE
+    fit <- knn3(Citzenship == "True" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = test)  
     
-    # get performance metrics for each fold
+    
+    probs <- predict(fit,newdata = test)[, 1] 
+    
+    
     diags <- rbind(diags, class_diag(probs, truth, positive = "USA"))
 }
 
-# average performance metrics across all folds
 summarize_all(diags, mean)
 ```
 
@@ -229,34 +227,34 @@ Discussion
 
 ```{R}
 # regression model code here
-linearfit<-lm(Points~.,data=nbaclusterdata) #predict mpg from all other variables
-linearyhat<-predict(linearfit) #predicted mpg
+linearfit<-lm(Points~.,data=nbaclusterdata) 
+linearyhat<-predict(linearfit) 
 mean((nbaclusterdata$Points-linearyhat)^2)
 ```
 
 ```{R}
 # cross-validation of regression model here
 set.seed(1234)
-k=5 #choose number of folds
-data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] #randomly order rows
-folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) #create folds
+k=5 
+data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] 
+folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) 
 diags<-NULL
 set.seed(1234)
-k=5 #choose number of folds
-data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] #randomly order rows
-folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) #create folds
+k=5 
+data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] 
+folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) 
 diags<-NULL
 for(i in 1:k){
   train<-data[folds!=i,]
   test<-data[folds==i,]
-  ## Fit linear regression model to training set
+  
   linearfit<-lm(Points~.,data=train)
-  ## Get predictions/y-hats on test set (fold i)
+ 
   linearyhat<-predict(linearfit,newdata=test)
-  ## Compute prediction error (MSE) for fold i
+ 
   diags<-mean((test$Points-linearyhat)^2)
 }
-mean(diags) ## get average MSE across all folds (much higher error)! 
+mean(diags)  
 ```
 
 Discussion
