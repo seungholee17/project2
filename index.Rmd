@@ -142,7 +142,7 @@ table(actual = y, predicted = y_hat)
 ```
 
 ```{R}
-
+# cross-validation of linear classifier here
 set.seed(322)
 
 k = 10
