@@ -105,65 +105,185 @@ plot(nba_pam, which = 2)
 ```
 
 Discussion of clustering here
-*For this portion of the project, a new data called "nbastats" was created where it omitted all observations that included NAs. In the nbastats dataset, all the character columns such as Names, Teams, etc. were removed in order to move on with the PAM cluster analysis and this dataset was named "nbaclusterdata". The best number to use for a PAM clustering algorithm was k=2, and that was when the silhouette width was highest, at a value of around 0.67, which is the same as the overall average silhouette width. This number indicates that a reasonable structure has been found. Since all the names of the players were removed in the nba_pam data, I was not able to directly figure the names of the players directly. However, the user ID information was displayed from nba_pam and it was used in the "nbastats" data in order to find the names of the medoids. The two provinces that are the medoids were Jrue Holiday and Ben Simmons.*   
+
+*For this portion of the project, a new data called "nbastats" was created where it omitted all observations that included NAs. In the nbastats dataset, all the character columns such as Names, Teams, etc. and numeric variables height and weight were removed in order to move on with the PAM cluster analysis and this dataset was named "nbaclusterdata". The best number to use for a PAM clustering algorithm was k=2, and that was when the silhouette width was highest, at a value of around 0.67, which is the same as the overall average silhouette width. This number indicates that a reasonable structure has been found. Since all the names of the players were removed in the nba_pam data, I was not able to directly figure the names of the players directly. However, the user ID information was displayed from nba_pam and it was used in the "nbastats" data in order to find the names of the medoids. The two provinces that are the medoids were Jrue Holiday and Ben Simmons.*   
     
 ### Dimensionality Reduction with PCA
 
 ```{R}
 # PCA code here
+nbaclusterdata[c("Points", "Rebounds", "Assists")]
+nbapca <- nbaclusterdata[c("Points", "Rebounds", "Assists")]
+pca1 <- princomp(nbapca, cor = T)
+summary(pca1, loadings = T)
+library(factoextra)
+fviz_pca_biplot(pca1)
+
 ```
 
 Discussions of PCA here. 
+
+*The "nbaclusterdata" was selected for PCA, but only the variables points, rebounds, and assists were selected. PC1 shows how if you score high on points and rebounds, there is a tradeoff of doing poorly on rebounds. PC2 shows how if you score high in points and rebounds, there is a tradeoff of doing poorly on assists. Lastly, PC3 shows how if you perform well with points, there is a tradeoff of doing poorly on rebounds and assists. This make sense because in the NBA, usually players who play the smaller positions such as guards usually score high in points and assists, but they do not grab as much rebounds. Similarly, NBA players who are taller and play the center position, they do well in grabbing rebounds and scoring points, but they do not do as well in the assists category. PC1 accounts for about 41 percent of the total variability, PC2 accounts for about 38 percent of the total variability, and PC3 accounts for about 21 percent of the total variability. The observations for the PC scores were displayed with a biplot through the fviz_pca function.*
 
 ###  Linear Classifier
 
 ```{R}
 # linear classifier code here
+logistic_fit <- glm(Citzenship == "USA" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = nbastats, 
+    family = "binomial")
+prob_reg <- predict(logistic_fit, type = "response")
+class_diag(prob_reg, nbastats$Citzenship, positive = "USA")
+y<-nbastats$Citzenship
+y<- factor(y, levels=c("International","USA"))
+y_hat <- sample(c("International","USA"), size=length(y), replace=T)
+y_hat <- factor(y_hat, levels=c("International","USA"))
+table(actual = y, predicted = y_hat)
+
 ```
 
 ```{R}
-# cross-validation of linear classifier here
+
+set.seed(322)
+
+k = 10
+
+data <- sample_frac(nbastats)  
+folds <- rep(1:k, length.out = nrow(data))  
+
+diags <- NULL
+
+i = 1
+for (i in 1:k) {
+    train <- data[folds != i, ]
+    test <- data[folds == i, ]
+    truth <- test$Citzenship
+    
+    
+    fit <- glm(Citzenship == "USA" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = test, 
+        family = "binomial")  
+    
+    
+    probs <- predict(fit, type = "response")  
+    
+   
+    diags <- rbind(diags, class_diag(probs, truth, positive = "USA"))
+}
+
+
+summarize_all(diags, mean)
 ```
 
-Discussion here
+*The binary variable "citzenship" was predicted from the selected 10 numeric variables. The logistic regression method was utilized. In terms of how well the model was performing per AUC, the value was 0.9249, which is a pretty good value. Next, a confusion matrix was created. According to the confusion matrix, the values were displayed for false negative, true positive, true negative, and false positive in the top left corner, top right corner, bottom left corner, and borrom right corner, respectively. After doing a k-fold CV on this same model, the AUC value came out to be 1 this time. Overall, there seems to be no overfitting because the CV AUC looked comparable to the AUC value prior to the k-fold.*    
 
 ### Non-Parametric Classifier
 
 ```{R}
 library(caret)
 # non-parametric classifier code here
+knn_fit <- knn3(Citzenship == "USA" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = nbastats)
+probs_knn <- predict(knn_fit, nbastats)[, 2]
+class_diag(probs_knn, nbastats$Citzenship, positive = "USA")
+y<-nbastats$Citzenship
+y<- factor(y, levels=c("International","USA"))
+y_hat <- sample(c("International","USA"), size=length(y), replace=T)
+y_hat <- factor(y_hat, levels=c("International","USA"))
+table(actual = y, predicted = y_hat)
 ```
 
 ```{R}
 # cross-validation of np classifier here
+set.seed(322)
+k = 10
+
+data <- sample_frac(nbastats)  #randomly order rows
+folds <- rep(1:k, length.out = nrow(data))  #create folds
+
+diags <- NULL
+
+i = 1
+for (i in 1:k) {
+    # create training and test sets
+    train <- data[folds != i, ]
+    test <- data[folds == i, ]
+    truth <- test$Citzenship
+    
+    # train model
+    fit <- knn3(Citzenship == "True" ~ Salary + Weight + Points + Blocks + Steals + Assists + Rebounds + Age + MP + G, data = test)  ### SPECIFY THE LOGISTIC REGRESSION MODEL FIT TO THE TRAINING SET HERE
+    
+    # test model
+    probs <- predict(fit,newdata = test)[, 1]  ### GET PREDICTIONS FROM THE TRAINED MODEL ON THE TEST SET HERE
+    
+    # get performance metrics for each fold
+    diags <- rbind(diags, class_diag(probs, truth, positive = "USA"))
+}
+
+# average performance metrics across all folds
+summarize_all(diags, mean)
 ```
 
 Discussion
 
+*This time, a non-parametric classifier was used (k-nearest-neighbors) to the exact same dataset/variables that I used with the linear classifier above. The AUC values have decreased significantly when utilizing kNN. The AUC values were 0.77 prior to the k-fold and 0.55 after doing a k-fold to the same model. The decrease in AUC values indicates that there was overfitting. Overall,the logistic regression model performed the best per AUC.*  
 
 ### Regression/Numeric Prediction
 
 ```{R}
 # regression model code here
+linearfit<-lm(Points~.,data=nbaclusterdata) #predict mpg from all other variables
+linearyhat<-predict(linearfit) #predicted mpg
+mean((nbaclusterdata$Points-linearyhat)^2)
 ```
 
 ```{R}
 # cross-validation of regression model here
+set.seed(1234)
+k=5 #choose number of folds
+data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] #randomly order rows
+folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) #create folds
+diags<-NULL
+set.seed(1234)
+k=5 #choose number of folds
+data<-nbaclusterdata[sample(nrow(nbaclusterdata)),] #randomly order rows
+folds<-cut(seq(1:nrow(nbaclusterdata)),breaks=k,labels=F) #create folds
+diags<-NULL
+for(i in 1:k){
+  train<-data[folds!=i,]
+  test<-data[folds==i,]
+  ## Fit linear regression model to training set
+  linearfit<-lm(Points~.,data=train)
+  ## Get predictions/y-hats on test set (fold i)
+  linearyhat<-predict(linearfit,newdata=test)
+  ## Compute prediction error (MSE) for fold i
+  diags<-mean((test$Points-linearyhat)^2)
+}
+mean(diags) ## get average MSE across all folds (much higher error)! 
 ```
 
 Discussion
+
+*In this section, a linear regression model was performed for the nbaclusterdata dataset because the original nbastats dataset was running into errors. I believe it was due to the fact that the original the nbastats data involved character variables such as the names of the NBA players. The points variable was being predicted from all other variables. The MSE value came out to be 8.50655 which is fairly a low measure of prediction error. Next, the average MSE across the k testing folds came out to be 5.050184. It can be concluded that the MSE was lower in CV, which is a good sign (means no overfitting).*
 
 ### Python 
 
 ```{R}
 library(reticulate)
+use_python("/usr/bin/python3", required = F)
+testing<-"Basketball is"
+
 ```
 
 ```{python}
 # python code here
+testing="my favorite sport."
+print(r.testing,testing) 
 ```
-
+```{R}
+testing<-"Basketball is"
+cat(c(testing,py$testing)) 
+```
 Discussion
+
+*Utilizing the reticualte package, I was able to utilize python codes and r codes all on this R Markdown. Just as we have been doing all semester, I have created a character vector under the {R} code section called "testing" which contains the text "Basketball is". Additionally, I did the same thing under the {python} code section except the code "testing" contained the text "my favorite sport". Despite having the same code name "testing", utilizing the r. code under {python} section and py$ code under the {R} section allowed me to print out the phrase "Basketball is my favorite sport". This method allowed me to have objects be named the same thing without having any conflicts. The code r. allowed me to access R-Defined objects under the python code chunk area and the code py$ allowed me to access python-defined objects under the r code chunk area.*   
 
 ### Concluding Remarks
 
